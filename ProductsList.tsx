@@ -1,18 +1,28 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import {Product, ProductListProps} from './interface';
-import ProductItem from './ProductItem';
+// components/ProductsList.js
 
-const ProductList = ({data}:ProductListProps) => {
-    return (
-        <View style={{flex:1}}>
-            <FlatList 
-                data={data} 
-                keyExtractor={(item) => item.id.toString() } 
-                renderItem={({item}) => <ProductItem item={item} />} />
-        </View>
-    )
+import React from 'react';
+import {StyleSheet, View, FlatList} from 'react-native';
+import ProductItem, {Product} from "./ProductItem";
+
+export interface ProductsListProps {
+    products: Array<Product>
 }
-//
-export default ProductList;
+
+export default class ProductsList extends React.Component<ProductsListProps> {
+    render() {
+        return (
+            <View style={styles.main_container}>
+                <FlatList
+                    data={this.props.products}
+                    renderItem={({item}) => (<ProductItem product={item} />)}
+                    keyExtractor={(item) => item.id.toString()}/>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    main_container: {
+        flex: 1
+    }
+});

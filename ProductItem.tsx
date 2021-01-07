@@ -1,22 +1,91 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import {Product} from './interface';
+// components/ProductItem.js
 
-const ProductItem = ({item}: {item: Product}) => {
-    return (
-    <View style={{flexDirection:"row",height:100,backgroundColor:"red"}}>
-        <Text style={{flex:1,backgroundColor:"red"}}>{item.description}</Text>
-        <View style={{flex:2}}>
-          <View style={{flex:1,flexDirection:"row"}}>
-            <Text style={{flex:2}}>{item.name}</Text>
-            <Text style={{flex:1}}>{item.price}</Text>
-          </View>
-          <Text style={{flex:4,backgroundColor:"yellow",flexDirection:"row"}}>{item.description}</Text>
-          <Text style={{flex:1,backgroundColor:"green",flexDirection:"row"}}>{item.stock}</Text>
-        </View>
-    </View>
-    )
+import React from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
+
+export interface Product {
+    id: number,
+    name: string,
+    description: string,
+    stock: number,
+    price: number,
+    picture: string
 }
 
-export default ProductItem;
+export interface ProductItemProps {
+    product: Product
+}
+
+export default class ProductItem extends React.Component<ProductItemProps> {
+    render() {
+        const {name, description, stock, price, picture} = this.props.product;
+        return (
+            <View style={styles.main_container}>
+                <Image
+                    style={styles.image}
+                    source={{uri: picture}}
+                />
+                <View style={styles.content_container}>
+                    <View style={styles.header_container}>
+                        <Text style={styles.name_text}>{name}</Text>
+                        <Text style={styles.price_text}>{price}</Text>
+                    </View>
+                    <View style={styles.description_container}>
+                        <Text style={styles.description_text} numberOfLines={6}>{description}</Text>
+                        {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, il suffit de définir un nombre maximum de ligne */}
+                    </View>
+                    <View style={styles.stock_container}>
+                        <Text style={styles.stock_text}>{stock} éléments en stock</Text>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    main_container: {
+        height: 190,
+        flexDirection: 'row',
+    },
+    image: {
+        width: 120,
+        height: 180,
+        margin: 5,
+        backgroundColor: 'gray'
+    },
+    content_container: {
+        flex: 1,
+        margin: 5
+    },
+    header_container: {
+        flex: 3,
+        flexDirection: 'row'
+    },
+    name_text: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        flex: 1,
+        flexWrap: 'wrap',
+        paddingRight: 5
+    },
+    price_text: {
+        fontWeight: 'bold',
+        fontSize: 26,
+        color: '#666666'
+    },
+    description_container: {
+        flex: 7
+    },
+    description_text: {
+        fontStyle: 'italic',
+        color: '#666666'
+    },
+    stock_container: {
+        flex: 1
+    },
+    stock_text: {
+        textAlign: 'right',
+        fontSize: 14
+    }
+});
