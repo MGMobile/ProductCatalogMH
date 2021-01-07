@@ -1,7 +1,7 @@
 // components/ProductItem.js
 
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 export interface Product {
     id: number,
@@ -13,14 +13,15 @@ export interface Product {
 }
 
 export interface ProductItemProps {
-    product: Product
+    product: Product,
+    navigation: any
 }
 
 export default class ProductItem extends React.Component<ProductItemProps> {
     render() {
         const {name, description, stock, price, picture} = this.props.product;
         return (
-            <View style={styles.main_container}>
+            <TouchableOpacity onPress={() => {this.props.navigation.navigate("Fiche produit", {product: this.props.product})} } style={styles.main_container}>
                 <Image
                     style={styles.image}
                     source={{uri: picture}}
@@ -38,7 +39,7 @@ export default class ProductItem extends React.Component<ProductItemProps> {
                         <Text style={styles.stock_text}>{stock} éléments en stock</Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }

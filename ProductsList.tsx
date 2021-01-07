@@ -5,7 +5,8 @@ import {StyleSheet, View, FlatList} from 'react-native';
 import ProductItem, {Product} from "./ProductItem";
 
 export interface ProductsListProps {
-    products: Array<Product>
+    products: Array<Product>,
+    navigation: any
 }
 
 export default class ProductsList extends React.Component<ProductsListProps> {
@@ -14,7 +15,7 @@ export default class ProductsList extends React.Component<ProductsListProps> {
             <View style={styles.main_container}>
                 <FlatList
                     data={this.props.products}
-                    renderItem={({item}) => (<ProductItem product={item} />)}
+                    renderItem={({item}) => (<ProductItem product={item} navigation={this.props.navigation} />)}
                     keyExtractor={(item) => item.id.toString()}/>
             </View>
         )
