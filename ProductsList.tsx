@@ -6,7 +6,7 @@ import ProductItem, {Product} from "./ProductItem";
 
 export interface ProductsListProps {
     products: Array<Product>,
-    navigation: any
+    navigation?: any
 }
 
 export default class ProductsList extends React.Component<ProductsListProps> {

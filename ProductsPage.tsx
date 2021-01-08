@@ -3,6 +3,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import ProductsList from "./ProductsList";
 import {Product} from "./ProductItem";
 import SearchBar from './SearchBar';
+import {connect} from 'react-redux';
 
 const API_KEY = "5d796207b5eedc635380d9b3"; // Replace with your API key for restdb.io
 
@@ -12,7 +13,7 @@ const HEADERS = {
 	'x-apikey': API_KEY
 }
 
-export default class ProductsPage extends React.Component<{navigation:any}> {
+class ProductsPage extends React.Component<{navigation:any, dispatch:any}> {
   state = {
     products_all : [],
     products : []
@@ -33,6 +34,9 @@ export default class ProductsPage extends React.Component<{navigation:any}> {
       console.log(result)
       const liste_produits:Array<Product> = result.map((elem:any,index:number) => ({id: elem.id, name: elem.name, description: elem.description, stock: elem.stock, price: elem.price, picture: elem.picture}) )
       this.setState({products:liste_produits, products_all: liste_produits})
+      const action = {type: "STORE_PRODUCTS", products: liste_produits}
+      this.props.dispatch(action)
+
     return result;
   }
   
@@ -58,6 +62,15 @@ export default class ProductsPage extends React.Component<{navigation:any}> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    dispatch: (action:any) => dispatch(action) 
+  }
+}
+
+
+export default connect (null, mapDispatchToProps) (ProductsPage)
 
 const styles = StyleSheet.create({
   container: {

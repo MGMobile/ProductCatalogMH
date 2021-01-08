@@ -1,21 +1,33 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
+import {connect} from 'react-redux';
 
-export default function ProductDetail (props:any) {
+function ProductDetail (props:any) {
+    const id = props.route.params.productId
+    const products = props.products
+
+    const product = products.find( (item:any) => item.id===id )
+
     return (
         <View style={{flex:1}}>
-            <Text>{props.route.params.product.name}</Text>
-            <Text>{props.route.params.product.description}</Text>
-            <Text>{props.route.params.product.price}</Text>
-            <Text>{props.route.params.product.stock}</Text>
+            <Text>{product.name}</Text>
+            <Text>{product.description}</Text>
+            <Text>{product.price}</Text>
+            <Text>{product.stock}</Text>
             <Image style={styles.image}
-                    source={{uri: props.route.params.product.picture}}
+                    source={{uri: product.picture}}
                 />
         </View>
         
     )
 
 }
+
+const mapStateToProps = (state:any) =>{
+    return state;
+}
+
+export default connect(mapStateToProps) (ProductDetail)
 
 const styles = StyleSheet.create({
     image: {

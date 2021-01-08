@@ -21,7 +21,7 @@ export default class ProductItem extends React.Component<ProductItemProps> {
     render() {
         const {name, description, stock, price, picture} = this.props.product;
         return (
-            <TouchableOpacity onPress={() => {this.props.navigation.navigate("Fiche produit", {product: this.props.product})} } style={styles.main_container}>
+            <TouchableOpacity onPress={() => {this.props.navigation.navigate("Fiche produit", {productId: this.props.product.id})} } style={styles.main_container}>
                 <Image
                     style={styles.image}
                     source={{uri: picture}}
