@@ -1,5 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import { StyleSheet, Image } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import ProductsPage from '../ProductsPage';
 import ProductDetail from '../ProductDetail';
@@ -30,10 +31,23 @@ function ProductsStackScreen() {
 export default function TabNavigatorScreen(){
     return (
         <NavigationContainer>
-            <TabNavigator.Navigator>
-                <TabNavigator.Screen name="Favoris" component={Favorites} />
-                <TabNavigator.Screen name="Liste" component={ProductsStackScreen}  />
+            <TabNavigator.Navigator tabBarOptions={{
+                                            activeBackgroundColor: '#DDDDDD',
+                                            inactiveBackgroundColor: '#FFFFFF',
+                                            showLabel: false,
+                                    }}>
+                <TabNavigator.Screen name="Liste" component={ProductsStackScreen} options={{
+                                            tabBarIcon: () => <Image source={require('../images/ic_search.png')} style={styles.icon}/> }}  />
+                <TabNavigator.Screen name="Favoris" component={Favorites} options={{
+                                            tabBarIcon: () => <Image source={require('../images/ic_favorite.png')} style={styles.icon}/> }}  />
             </TabNavigator.Navigator>
         </NavigationContainer>
     )
 }
+
+const styles = StyleSheet.create({
+    icon: {
+        width: 30,
+        height: 30
+    }
+});
