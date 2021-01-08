@@ -4,6 +4,7 @@ import ProductsList from "./ProductsList";
 import {Product} from "./ProductItem";
 import SearchBar from './SearchBar';
 import {connect} from 'react-redux';
+import {hideAsync} from 'expo-splash-screen';
 
 const API_KEY = "5d796207b5eedc635380d9b3"; // Replace with your API key for restdb.io
 
@@ -36,7 +37,7 @@ class ProductsPage extends React.Component<{navigation:any, dispatch:any}> {
       this.setState({products:liste_produits, products_all: liste_produits})
       const action = {type: "STORE_PRODUCTS", products: liste_produits}
       this.props.dispatch(action)
-
+      await hideAsync();
     return result;
   }
   
